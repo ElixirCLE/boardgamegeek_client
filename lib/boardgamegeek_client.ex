@@ -13,7 +13,7 @@ defmodule BoardGameGeekClient do
     get_games_info(game_ids)
   end
 
-  defp get_games_info(game_ids), do: get_games_info(game_ids, [])
+  def get_games_info(game_ids) when is_list(game_ids), do: get_games_info(game_ids, [])
   defp get_games_info([], games_acc), do: games_acc
   defp get_games_info([head | tail], games_acc) do
     url = "thing?id=" <> head
@@ -35,10 +35,6 @@ defmodule BoardGameGeekClient do
     %Game{name: name,
           min_players: String.to_integer(min_players),
           max_players: String.to_integer(max_players)}
-  end
-
-  defp get_games_info(games_list, []) do
-    games_list
   end
 
   defp get_response(url, _, status_code) when status_code == 202 do
