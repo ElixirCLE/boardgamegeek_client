@@ -37,13 +37,13 @@ defmodule BoardGameGeekClient do
           max_players: String.to_integer(max_players)}
   end
 
-  defp get_response(url, _, status_code) when status_code == 202 do
+  defp get_response(url, _response, 202) do
     :timer.sleep(500)
     response = BoardGameGeek.post(url)
     get_response(url, response, response.status_code)
   end
 
-  defp get_response(_, response, _) do
+  defp get_response(_url, response, _status_code) do
     response.body
     |> Exml.parse
   end
