@@ -5,6 +5,16 @@ defmodule BoardGameGeekClient do
 
   require BoardGameGeek
 
+  def search_games(query, wait \\ 500) do
+    url = "search?query=#{query}&type=boardgame"
+    doc = get_response(url)
+    ids = Exml.get(doc, "//items/item/@id")
+    names = Exml.get(doc, "//items/item/name/@value")
+    years = Exml.get(doc, "//items/item/yearpublished/@value")
+    games = Enum.zip(names, years)
+    Enum.zip(ids, games) |> Enum.map(fn {id, {name, year}} -> %{id: id, name: "#{name} (#{year})"} end)
+  end
+
   def get_game_collection(username, wait \\ 500) do
     url = "collection?username=#{username}&own=1&subtype=boardgame"
     doc = get_response(url, wait)
@@ -37,22 +47,28 @@ defmodule BoardGameGeekClient do
   end
 
   defp game_from_xml(doc) do
+    bgg_id = Exml.get doc, "//items/item/@id"
     name = Exml.get doc, "//items/item/name[@type='primary']/@value"
+    image = Exml.get doc, "//items/item/image"
     min_players = Exml.get doc, "//items/item/minplayers/@value"
     max_players = Exml.get doc, "//items/item/maxplayers/@value"
-    %Game{name: name,
-          min_players: String.to_integer(min_players),
-          max_players: String.to_integer(max_players)}
+    %Game{
+           bgg_id: bgg_id,
+           name: name,
+           image: image,
+           min_players: String.to_integer(min_players),
+           max_players: String.to_integer(max_players)
+         }
   end
 
   defp get_response(url, wait) do
-    response = BoardGameGeek.post(url)
+    response = BoardGameGeek.get(url)
     get_response(url, wait, response, response.status_code)
   end
 
   defp get_response(url, wait, _response, 202) do
     Process.sleep(wait)
-    response = BoardGameGeek.post(url)
+    response = BoardGameGeek.get(url)
     get_response(url, wait, response, response.status_code)
   end
 

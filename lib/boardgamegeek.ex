@@ -18,7 +18,7 @@ defmodule BoardGameGeek do
   use HTTPotion.Base
 
   def process_url(url) do
-    "http://www.boardgamegeek.com/xmlapi2/" <> url
+    "https://www.boardgamegeek.com/xmlapi2/" <> url
   end
 
   def process_request_headers(headers) do
