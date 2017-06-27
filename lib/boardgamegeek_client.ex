@@ -25,7 +25,7 @@ defmodule BoardGameGeekClient do
 
   def get_games_info(game_ids) when is_list(game_ids) do
     doc = "thing?id=#{Enum.join(game_ids, ",")}"
-    |> get_response(10_000)
+    |> get_response(30_000)
 
     case games_from_xml(doc) do
       {:ok, games} ->
