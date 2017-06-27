@@ -14,7 +14,7 @@ defmodule BoardGameGeekClient do
     |> search_games(doc)
   end
   def search_games(0, _), do: []
-  def search_games(records, doc) do
+  def search_games(_, doc) do
     ids = Exml.get(doc, "//items/item/@id")
     names = Exml.get(doc, "//items/item/name/@value")
     years = Exml.get(doc, "//items/item/yearpublished/@value")
