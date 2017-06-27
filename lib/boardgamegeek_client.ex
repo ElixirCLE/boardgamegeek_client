@@ -19,7 +19,7 @@ defmodule BoardGameGeekClient do
     names = Exml.get(doc, "//items/item/name/@value")
     years = Exml.get(doc, "//items/item/yearpublished/@value")
     games = Enum.zip(names, years)
-    Enum.zip(ids, games) |> Enum.map(fn {id, {name, year}} -> %{id: id, name: "#{name} (#{year})"} end)
+    Enum.zip(ids, games) |> Enum.map(fn {id, {name, year}} -> %{id: String.to_integer(id), name: "#{name} (#{year})"} end)
   end
 
   def get_game_collection(username) do
