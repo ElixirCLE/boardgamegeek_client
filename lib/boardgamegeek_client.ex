@@ -5,7 +5,7 @@ defmodule BoardGameGeekClient do
 
   require BoardGameGeek
 
-  def search_games(query, wait \\ 500) do
+  def search_games(query) do
     url = "search?query=#{query}&type=boardgame"
     doc = get_response(url)
     ids = Exml.get(doc, "//items/item/@id")
@@ -15,65 +15,56 @@ defmodule BoardGameGeekClient do
     Enum.zip(ids, games) |> Enum.map(fn {id, {name, year}} -> %{id: id, name: "#{name} (#{year})"} end)
   end
 
-  def get_game_collection(username, wait \\ 500) do
-    url = "collection?username=#{username}&own=1&subtype=boardgame"
-    doc = get_response(url, wait)
-    game_ids = Exml.get doc, "//items/item/@objectid"
-    Process.sleep(wait)
+  def get_game_collection(username) do
+    game_ids =
+      "collection?username=#{username}&own=1&subtype=boardgame"
+      |> get_response
+      |> Exml.get("//items/item/@objectid")
     get_games_info(game_ids)
   end
 
-  def get_games_info(game_ids, wait \\ 500) when is_list(game_ids), do: get_games_info(game_ids, wait, [])
-  defp get_games_info([], _wait, acc), do: acc
-  defp get_games_info([head|tail], wait, acc) do
-    url = "thing?id=#{head}"
-    response = BoardGameGeek.post(url)
-    case response.status_code do
-      202 ->
-        Process.sleep(wait)
-        # Results not ready, append to end of games list so that it retries
-        get_games_info(tail ++ [head], wait, acc)
-      200 ->
-        Process.sleep(wait)
-        get_games_info(tail, wait, [game_from_response(response) | acc])
-      true -> raise "unknown status code: #{response.status_code}"
+  def get_games_info(game_ids) when is_list(game_ids) do
+    doc = "thing?id=#{Enum.join(game_ids, ",")}"
+    |> get_response(10_000)
+
+    case games_from_xml(doc) do
+      {:ok, games} ->
+        games
+      {:error, msg} ->
+        raise msg
     end
   end
+  def get_games_info(_), do: []
 
-  defp game_from_response(response) do
-    response.body
-    |> Exml.parse
-    |> game_from_xml
-  end
-
-  defp game_from_xml(doc) do
-    bgg_id = Exml.get doc, "//items/item/@id"
-    name = Exml.get doc, "//items/item/name[@type='primary']/@value"
-    image = Exml.get doc, "//items/item/image"
+  defp games_from_xml(doc) do
+    bgg_ids = Exml.get doc, "//items/item/@id"
+    names = Exml.get doc, "//items/item/name[@type='primary']/@value"
+    images = Exml.get doc, "//items/item/thumbnail"
     min_players = Exml.get doc, "//items/item/minplayers/@value"
     max_players = Exml.get doc, "//items/item/maxplayers/@value"
-    %Game{
-           bgg_id: bgg_id,
-           name: name,
-           image: image,
-           min_players: String.to_integer(min_players),
-           max_players: String.to_integer(max_players)
-         }
+    game_from_xml(bgg_ids, names, images, min_players, max_players, [])
   end
 
-  defp get_response(url, wait) do
-    response = BoardGameGeek.get(url)
-    get_response(url, wait, response, response.status_code)
+  # This is somewhat poorly named. The game is from the XML but we've already parsed it into a series of lists
+  defp game_from_xml([bgg_id|ids], [name|names], [image|images], [min_players|mins], [max_players|maxes], result) do
+    game = %Game{
+             bgg_id: bgg_id,
+             name: name,
+             image: image,
+             min_players: String.to_integer(min_players),
+             max_players: String.to_integer(max_players)
+           }
+    game_from_xml(ids, names, images, mins, maxes, [game | result])
+  end
+  defp game_from_xml([], [], [], [], [], result) do
+    {:ok, Enum.reverse(result)}
+  end
+  defp game_from_xml(_, _, _, _, _, _) do
+    {:error, "Invalid data was parsed from BGG. All data lists should be the same length."}
   end
 
-  defp get_response(url, wait, _response, 202) do
-    Process.sleep(wait)
-    response = BoardGameGeek.get(url)
-    get_response(url, wait, response, response.status_code)
-  end
-
-  defp get_response(_url, _wait, response, _status_code) do
-    response.body
+  defp get_response(url, timeout \\ 5_000) do
+    BoardGameGeek.get(url, [timeout: timeout]).body
     |> Exml.parse
   end
 end
