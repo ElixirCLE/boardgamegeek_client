@@ -44,24 +44,21 @@ defmodule BoardGameGeekClient do
   def get_games_info(_), do: []
 
   defp games_from_xml(doc) do
-    # This is a bit hacky, but we only get a list if we ask for multiple games. We need to make sure we always have a list
-    bgg_ids = List.flatten([Exml.get(doc, "//items/item/@id")])
-    names = List.flatten([Exml.get(doc, "//items/item/name[@type='primary']/@value")])
-    images = List.flatten([Exml.get(doc, "//items/item/thumbnail")])
-    min_players = List.flatten([Exml.get(doc, "//items/item/minplayers/@value")])
-    max_players = List.flatten([Exml.get(doc, "//items/item/maxplayers/@value")])
+    bgg_ids = Exml.get(doc, "//items/item/@id")
+    names = Exml.get(doc, "//items/item/name[@type='primary']/@value")
+    images = Exml.get(doc, "//items/item/thumbnail")
+    min_players = Exml.get(doc, "//items/item/minplayers/@value")
+    max_players = Exml.get(doc, "//items/item/maxplayers/@value")
     game_from_xml(bgg_ids, names, images, min_players, max_players, [])
   end
 
   # This is somewhat poorly named. The game is from the XML but we've already parsed it into a series of lists
+  # This specific method is only used in the case where we only look up a single game
+  defp game_from_xml(bgg_id, name, image, min_players, max_players, _) when not is_list(bgg_id) do
+    {:ok, [create_game(bgg_id, name, image, min_players, max_players)]}
+  end
   defp game_from_xml([bgg_id|ids], [name|names], [image|images], [min_players|mins], [max_players|maxes], result) do
-    game = %Game{
-             bgg_id: String.to_integer(bgg_id),
-             name: name,
-             image: image,
-             min_players: String.to_integer(min_players),
-             max_players: String.to_integer(max_players)
-           }
+    game = create_game(bgg_id, name, image, min_players, max_players)
     game_from_xml(ids, names, images, mins, maxes, [game | result])
   end
   defp game_from_xml([], [], [], [], [], result) do
@@ -69,6 +66,16 @@ defmodule BoardGameGeekClient do
   end
   defp game_from_xml(_, _, _, _, _, _) do
     {:error, "Invalid data was parsed from BGG. All data lists should be the same length."}
+  end
+
+  defp create_game(bgg_id, name, image, min_players, max_players) do
+    %Game{
+       bgg_id: String.to_integer(bgg_id),
+       name: name,
+       image: image,
+       min_players: String.to_integer(min_players),
+       max_players: String.to_integer(max_players)
+    }
   end
 
   defp get_response(url, timeout \\ 5_000) do
