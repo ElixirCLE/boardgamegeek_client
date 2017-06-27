@@ -44,11 +44,12 @@ defmodule BoardGameGeekClient do
   def get_games_info(_), do: []
 
   defp games_from_xml(doc) do
-    bgg_ids = Exml.get doc, "//items/item/@id"
-    names = Exml.get doc, "//items/item/name[@type='primary']/@value"
-    images = Exml.get doc, "//items/item/thumbnail"
-    min_players = Exml.get doc, "//items/item/minplayers/@value"
-    max_players = Exml.get doc, "//items/item/maxplayers/@value"
+    # This is a bit hacky, but we only get a list if we ask for multiple games. We need to make sure we always have a list
+    bgg_ids = List.flatten([Exml.get(doc, "//items/item/@id")])
+    names = List.flatten([Exml.get(doc, "//items/item/name[@type='primary']/@value")])
+    images = List.flatten([Exml.get(doc, "//items/item/thumbnail")])
+    min_players = List.flatten([Exml.get(doc, "//items/item/minplayers/@value")])
+    max_players = List.flatten([Exml.get(doc, "//items/item/maxplayers/@value")])
     game_from_xml(bgg_ids, names, images, min_players, max_players, [])
   end
 
