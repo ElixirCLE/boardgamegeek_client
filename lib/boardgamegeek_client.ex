@@ -6,8 +6,15 @@ defmodule BoardGameGeekClient do
   require BoardGameGeek
 
   def search_games(query) do
-    url = "search?query=#{query}&type=boardgame"
-    doc = get_response(url)
+    doc = "search?query=#{query}&type=boardgame"
+    |> get_response
+
+    Exml.get(doc, "//items/@total")
+    |> String.to_integer
+    |> search_games(doc)
+  end
+  def search_games(0, _), do: []
+  def search_games(records, doc) do
     ids = Exml.get(doc, "//items/item/@id")
     names = Exml.get(doc, "//items/item/name/@value")
     years = Exml.get(doc, "//items/item/yearpublished/@value")
@@ -48,7 +55,7 @@ defmodule BoardGameGeekClient do
   # This is somewhat poorly named. The game is from the XML but we've already parsed it into a series of lists
   defp game_from_xml([bgg_id|ids], [name|names], [image|images], [min_players|mins], [max_players|maxes], result) do
     game = %Game{
-             bgg_id: bgg_id,
+             bgg_id: String.to_integer(bgg_id),
              name: name,
              image: image,
              min_players: String.to_integer(min_players),
