@@ -13,8 +13,8 @@ defmodule BoardGameGeekClient do
     |> String.to_integer
     |> search_games(doc)
   end
-  def search_games(0, _), do: []
-  def search_games(_, doc) do
+  defp search_games(0, _), do: []
+  defp search_games(_, doc) do
     ids = Exml.get(doc, "//items/item/@id")
     names = Exml.get(doc, "//items/item/name/@value")
     years = Exml.get(doc, "//items/item/yearpublished/@value")
