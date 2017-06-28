@@ -27,6 +27,13 @@ defmodule BoardGameGeekClient do
     ids = Exml.get(doc, "//items/item/@id")
     names = Exml.get(doc, "//items/item/name/@value")
     years = Exml.get(doc, "//items/item/yearpublished/@value")
+    search_games(ids, names, years)
+  end
+  # Handle the case where there is only one result
+  defp search_games(id, name, year) when not is_list(id) do
+    search_games([id], [name], [year])
+  end
+  defp search_games(ids, names, years) when is_list(ids) do
     games = Enum.zip(names, years)
     Enum.zip(ids, games) |> Enum.map(fn {id, {name, year}} -> %{id: String.to_integer(id), name: "#{name} (#{year})"} end)
   end
