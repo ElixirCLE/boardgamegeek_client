@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items termsofuse="http://boardgamegeek.com/xmlapi/termsofuse">
+    <item type="boardgame" id="207830">
+        <thumbnail>https://cf.geekdo-images.com/images/pic3213622_t.png</thumbnail>
+        <image>https://cf.geekdo-images.com/images/pic3213622.png</image>
+        <name type="primary" sortindex="1" value="5-Minute Dungeon" />
+        <description>5-&amp;shy;Minute Dungeon is a chaotic, co-&amp;shy;operative, real-&amp;shy;time card game in which players have only five minutes to escape the randomized dungeon. Communication and teamwork are critical to survival because there's no time to form a carefully considered plan &amp;mdash; and no predicting what dangers lie ahead.&amp;#10;&amp;#10;In more detail, players assume the role of one of ten heroes, each with special cards and abilities. Once the five-minute timer starts, the race is on to defeat all the monsters inside the dungeon. In order to defeat a monster, players must match symbols from their hand with ones on the monster's card. At the end of each dungeon is a powerful dungeon boss &amp;mdash; and after the first boss is defeated, the campaign continues to the second boss. Each boss, and each randomized dungeon, gets harder until players reach the fifth and final boss.&amp;#10;&amp;#10;</description>
+        <yearpublished value="2017" />
+        <minplayers value="2" />
+        <maxplayers value="5" />
+        <poll name="suggested_numplayers" title="User Suggested Number of Players" totalvotes="14">
+            <results numplayers="1">
+                <result value="Best" numvotes="0" />
+                <result value="Recommended" numvotes="0" />
+                <result value="Not Recommended" numvotes="11" />
+            </results>
+            <results numplayers="2">
+                <result value="Best" numvotes="4" />
+                <result value="Recommended" numvotes="6" />
+                <result value="Not Recommended" numvotes="3" />
+            </results>
+            <results numplayers="3">
+                <result value="Best" numvotes="3" />
+                <result value="Recommended" numvotes="8" />
+                <result value="Not Recommended" numvotes="2" />
+            </results>
+            <results numplayers="4">
+                <result value="Best" numvotes="9" />
+                <result value="Recommended" numvotes="3" />
+                <result value="Not Recommended" numvotes="0" />
+            </results>
+            <results numplayers="5">
+                <result value="Best" numvotes="7" />
+                <result value="Recommended" numvotes="2" />
+                <result value="Not Recommended" numvotes="0" />
+            </results>
+            <results numplayers="5+">
+                <result value="Best" numvotes="0" />
+                <result value="Recommended" numvotes="0" />
+                <result value="Not Recommended" numvotes="7" />
+            </results>
+        </poll>
+        <playingtime value="30" />
+        <minplaytime value="5" />
+        <maxplaytime value="30" />
+        <minage value="8" />
+        <poll name="suggested_playerage" title="User Suggested Player Age" totalvotes="7">
+            <results>
+                <result value="2" numvotes="0" />
+                <result value="3" numvotes="0" />
+                <result value="4" numvotes="0" />
+                <result value="5" numvotes="1" />
+                <result value="6" numvotes="3" />
+                <result value="8" numvotes="2" />
+                <result value="10" numvotes="1" />
+                <result value="12" numvotes="0" />
+                <result value="14" numvotes="0" />
+                <result value="16" numvotes="0" />
+                <result value="18" numvotes="0" />
+                <result value="21 and up" numvotes="0" />
+            </results>
+        </poll>
+        <poll name="language_dependence" title="Language Dependence" totalvotes="4">
+            <results>
+                <result level="1" value="No necessary in-game text" numvotes="0" />
+                <result level="2" value="Some necessary text - easily memorized or small crib sheet" numvotes="3" />
+                <result level="3" value="Moderate in-game text - needs crib sheet or paste ups" numvotes="1" />
+                <result level="4" value="Extensive use of text - massive conversion needed to be playable" numvotes="0" />
+                <result level="5" value="Unplayable in another language" numvotes="0" />
+            </results>
+        </poll>
+        <link type="boardgamecategory" id="1002" value="Card Game" />
+        <link type="boardgamecategory" id="1010" value="Fantasy" />
+        <link type="boardgamecategory" id="1046" value="Fighting" />
+        <link type="boardgamecategory" id="1037" value="Real-time" />
+        <link type="boardgamemechanic" id="2023" value="Co-operative Play" />
+        <link type="boardgamemechanic" id="2040" value="Hand Management" />
+        <link type="boardgamemechanic" id="2015" value="Variable Player Powers" />
+        <link type="boardgamefamily" id="8374" value="Crowdfunding: Kickstarter" />
+        <link type="boardgamedesigner" id="85851" value="Connor Reid" />
+        <link type="boardgameartist" id="94578" value="Alex Diochon" />
+        <link type="boardgamepublisher" id="37" value="KOSMOS" />
+        <link type="boardgamepublisher" id="2429" value="Wiggles 3D" />
+    </item>
+    <item type="boardgame" id="141932">
+        <thumbnail>https://cf.geekdo-images.com/images/pic1714861_t.png</thumbnail>
+        <image>https://cf.geekdo-images.com/images/pic1714861.png</image>
+        <name type="primary" sortindex="5" value="The Agents" />
+        <description>The Agents is a strategic card game that introduces a unique double-edged card mechanism into the undercover world of covert operations, subterfuge, secrecy and sabotage. Players must join their Agents into Factions, assign Missions and take their opponents down, to gather intel and win the most points.&amp;#10;&amp;#10;Each Agent card features a &amp;quot;command&amp;quot; on one end of the card and &amp;quot;points&amp;quot; on the other end. The direction in which you place the card determines from which asset you benefit. If you choose to perform the command, one of your opponents scores the points; if you keep the points for yourself, an opponent gets to perform the command. With 25 different Agents, each with its own unique ability, Agents can be turned, killed, extracted and swapped &amp;ndash; making the game ever flexible, variable, unpredictable and a test of forward planning and quick thinking. As you learn about each Agent's special abilities, discover how Agents work together or against each other, and weigh up the advantages of collecting points for yourself versus using the commands to further your goals and sabotage your opponent's strategies, the game becomes increasingly complex, dynamic and challenging.&amp;#10;&amp;#10;Missions, played alongside Factions of Agents, provide interesting, strategic conditions which, if fulfilled, score you big points &amp;ndash; but if you race ahead, you'll also become a target for attack. The better you're doing, the more under fire you'll be.&amp;#10;&amp;#10;</description>
+        <yearpublished value="2013" />
+        <minplayers value="2" />
+        <maxplayers value="5" />
+        <poll name="suggested_numplayers" title="User Suggested Number of Players" totalvotes="36">
+            <results numplayers="1">
+                <result value="Best" numvotes="0" />
+                <result value="Recommended" numvotes="0" />
+                <result value="Not Recommended" numvotes="23" />
+            </results>
+            <results numplayers="2">
+                <result value="Best" numvotes="5" />
+                <result value="Recommended" numvotes="19" />
+                <result value="Not Recommended" numvotes="9" />
+            </results>
+            <results numplayers="3">
+                <result value="Best" numvotes="21" />
+                <result value="Recommended" numvotes="9" />
+                <result value="Not Recommended" numvotes="0" />
+            </results>
+            <results numplayers="4">
+                <result value="Best" numvotes="12" />
+                <result value="Recommended" numvotes="13" />
+                <result value="Not Recommended" numvotes="2" />
+            </results>
+            <results numplayers="5">
+                <result value="Best" numvotes="1" />
+                <result value="Recommended" numvotes="13" />
+                <result value="Not Recommended" numvotes="11" />
+            </results>
+            <results numplayers="5+">
+                <result value="Best" numvotes="0" />
+                <result value="Recommended" numvotes="1" />
+                <result value="Not Recommended" numvotes="23" />
+            </results>
+        </poll>
+        <playingtime value="40" />
+        <minplaytime value="20" />
+        <maxplaytime value="40" />
+        <minage value="8" />
+        <poll name="suggested_playerage" title="User Suggested Player Age" totalvotes="14">
+            <results>
+                <result value="2" numvotes="0" />
+                <result value="3" numvotes="0" />
+                <result value="4" numvotes="0" />
+                <result value="5" numvotes="0" />
+                <result value="6" numvotes="0" />
+                <result value="8" numvotes="4" />
+                <result value="10" numvotes="4" />
+                <result value="12" numvotes="4" />
+                <result value="14" numvotes="0" />
+                <result value="16" numvotes="2" />
+                <result value="18" numvotes="0" />
+                <result value="21 and up" numvotes="0" />
+            </results>
+        </poll>
+        <poll name="language_dependence" title="Language Dependence" totalvotes="17">
+            <results>
+                <result level="6" value="No necessary in-game text" numvotes="0" />
+                <result level="7" value="Some necessary text - easily memorized or small crib sheet" numvotes="7" />
+                <result level="8" value="Moderate in-game text - needs crib sheet or paste ups" numvotes="8" />
+                <result level="9" value="Extensive use of text - massive conversion needed to be playable" numvotes="2" />
+                <result level="10" value="Unplayable in another language" numvotes="0" />
+            </results>
+        </poll>
+        <link type="boardgamecategory" id="1002" value="Card Game" />
+        <link type="boardgamecategory" id="1081" value="Spies/Secret Agents" />
+        <link type="boardgamemechanic" id="2040" value="Hand Management" />
+        <link type="boardgamefamily" id="8374" value="Crowdfunding: Kickstarter" />
+        <link type="boardgameexpansion" id="151173" value="The Agents: Black Ops" />
+        <link type="boardgameexpansion" id="158404" value="The Agents: Bounties" />
+        <link type="boardgameexpansion" id="158402" value="The Agents: Break the Rules" />
+        <link type="boardgameexpansion" id="158401" value="The Agents: Events" />
+        <link type="boardgameexpansion" id="167621" value="The Agents: MaVericks" />
+        <link type="boardgameexpansion" id="147402" value="The Agents: Mission: Critical" />
+        <link type="boardgameexpansion" id="158270" value="The Agents: Sites" />
+        <link type="boardgameexpansion" id="147401" value="The Agents: The 'Secret' Agents" />
+        <link type="boardgameexpansion" id="147404" value="The Agents: The 'Special' Agents" />
+        <link type="boardgameexpansion" id="147405" value="The Agents: The 'Spoof' Agents" />
+        <link type="boardgameexpansion" id="171567" value="The Agents: The Commanders" />
+        <link type="boardgameexpansion" id="147403" value="The Agents: The Partners" />
+        <link type="boardgamedesigner" id="68465" value="Saar Shai" />
+        <link type="boardgameartist" id="68466" value="Dan Morison" />
+        <link type="boardgamepublisher" id="4" value="(Self-Published)" />
+    </item>
+</items>

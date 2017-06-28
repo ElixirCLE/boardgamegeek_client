@@ -1,10 +1,18 @@
 defmodule BoardGameGeekClient do
+  @boardgamegeek_api Application.get_env(:boardgamegeek_client, :boardgamegeek_api)
+
   @moduledoc """
-  Client for interacting with BoardGameGeek.
+  Client for interacting with the BoardGameGeek XML API (v2).
   """
 
-  require BoardGameGeek
+  @doc """
+  Search BoardGameGeek for any board games containing the query string.
+  Returns a list of maps containing the names (plus year) and BoardGameGeek ID.
 
+  ## Examples
+      iex> BoardGameGeekClient.search_games("Scythe")
+      [%{id: 169786, name: "Scythe (2016)"}, %{id: 199727, name: "Scythe: Invaders from Afar (2016)"}]
+  """
   def search_games(query) do
     doc = "search?query=#{query}&type=boardgame"
     |> get_response
@@ -22,6 +30,15 @@ defmodule BoardGameGeekClient do
     Enum.zip(ids, games) |> Enum.map(fn {id, {name, year}} -> %{id: String.to_integer(id), name: "#{name} (#{year})"} end)
   end
 
+  @doc """
+  Request a user's collection of board games from BoardGameGeek.
+  Returns a list of Game structs contains the BoardGameGeek ID, name, thumbnail, minimum players, and maximum players
+
+  ## Examples
+      iex> BoardGameGeekClient.get_game_collection("Serneum")
+      [%Game{bgg_id: 207830, name: "5-Minute Dungeon", image: "https://cf.geekdo-images.com/images/pic3213622_t.png", min_players: 2, max_players: 5},
+       %Game{bgg_id: 141932, name: "The Agents", image: "https://cf.geekdo-images.com/images/pic1714861_t.png", min_players: 2, max_players: 5}]
+  """
   def get_game_collection(username) do
     game_ids =
       "collection?username=#{username}&own=1&subtype=boardgame"
@@ -30,6 +47,18 @@ defmodule BoardGameGeekClient do
     get_games_info(game_ids)
   end
 
+  @doc """
+  Request information about a specific board game from BoardGameGeek.
+  Returns a list of Game structs contains the BoardGameGeek ID, name, thumbnail, minimum players, and maximum players
+
+  ## Examples
+      iex> BoardGameGeekClient.get_games_info([207830, 141932])
+      [%Game{bgg_id: 207830, name: "5-Minute Dungeon", image: "https://cf.geekdo-images.com/images/pic3213622_t.png", min_players: 2, max_players: 5},
+       %Game{bgg_id: 141932, name: "The Agents", image: "https://cf.geekdo-images.com/images/pic1714861_t.png", min_players: 2, max_players: 5}]
+
+      iex> BoardGameGeekClient.get_games_info([207830])
+      [%Game{bgg_id: 207830, name: "5-Minute Dungeon", image: "https://cf.geekdo-images.com/images/pic3213622_t.png", min_players: 2, max_players: 5}]
+  """
   def get_games_info(game_ids) when is_list(game_ids) do
     doc = "thing?id=#{Enum.join(game_ids, ",")}"
     |> get_response(30_000)
@@ -79,7 +108,7 @@ defmodule BoardGameGeekClient do
   end
 
   defp get_response(url, timeout \\ 5_000) do
-    BoardGameGeek.get(url, [timeout: timeout]).body
+    @boardgamegeek_api.get(url, [timeout: timeout]).body
     |> Exml.parse
   end
 end

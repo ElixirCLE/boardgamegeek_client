@@ -1,4 +1,4 @@
-defmodule BoardGameGeek do
+defmodule BoardGameGeek.HTTPClient do
   @moduledoc """
   BoardGameGeek.com API wrapper
 
