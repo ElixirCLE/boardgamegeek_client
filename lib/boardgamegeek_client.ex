@@ -12,6 +12,9 @@ defmodule BoardGameGeekClient do
   ## Examples
       iex> BoardGameGeekClient.search_games("Scythe")
       [%{id: 169786, name: "Scythe (2016)"}, %{id: 199727, name: "Scythe: Invaders from Afar (2016)"}]
+
+      iex> BoardGameGeekClient.search_games("Sushi Go Party")
+      [%{id: 192291, name: "Sushi Go Party! (2016)"}]
   """
   def search_games(query) do
     encoded_query = URI.encode_query(%{query: query})
