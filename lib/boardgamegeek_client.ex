@@ -14,7 +14,8 @@ defmodule BoardGameGeekClient do
       [%{id: 169786, name: "Scythe (2016)"}, %{id: 199727, name: "Scythe: Invaders from Afar (2016)"}]
   """
   def search_games(query) do
-    doc = "search?query=#{query}&type=boardgame"
+    encoded_query = URI.encode_query(%{query: query})
+    doc = "search?#{encoded_query}&type=boardgame"
     |> get_response
 
     Exml.get(doc, "//items/@total")
@@ -40,8 +41,9 @@ defmodule BoardGameGeekClient do
        %Game{bgg_id: 141932, name: "The Agents", image: "https://cf.geekdo-images.com/images/pic1714861_t.png", min_players: 2, max_players: 5}]
   """
   def get_game_collection(username) do
+    encoded_username = URI.encode_query(%{username: username})
     game_ids =
-      "collection?username=#{username}&own=1&subtype=boardgame"
+      "collection?#{encoded_username}&own=1&subtype=boardgame"
       |> get_response
       |> Exml.get("//items/item/@objectid")
     get_games_info(game_ids)
