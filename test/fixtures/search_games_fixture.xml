@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items total="10" termsofuse="http://boardgamegeek.com/xmlapi/termsofuse">
+    <item type="boardgame" id="169786">
+        <name type="primary" value="Scythe"/>
+        <yearpublished value="2016" />
+    </item>
+    <item type="boardgame" id="199727">
+        <name type="primary" value="Scythe: Invaders from Afar"/>
+        <yearpublished value="2016" />
+    </item>
+</items>

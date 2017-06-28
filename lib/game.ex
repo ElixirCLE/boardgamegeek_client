@@ -3,5 +3,5 @@ defmodule Game do
   Defines a game.
   """
 
-  defstruct [:name, :min_players, :max_players]
+  defstruct [:bgg_id, :name, :image, :min_players, :max_players]
 end
