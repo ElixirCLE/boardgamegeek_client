@@ -1,8 +1,9 @@
 defmodule BoardGameGeekClient do
   @boardgamegeek_api Application.get_env(:boardgamegeek_client, :boardgamegeek_api)
+  @boardgamegeek_html Application.get_env(:boardgamegeek_client, :boardgamegeek_html)
 
   @moduledoc """
-  Client for interacting with the BoardGameGeek XML API (v2).
+  Client for interacting with BoardGameGeek.
   """
 
   @doc """
@@ -11,34 +12,49 @@ defmodule BoardGameGeekClient do
 
   ## Examples
       iex> BoardGameGeekClient.search_games("Scythe")
-      [%{id: 169786, name: "Scythe (2016)"}, %{id: 199727, name: "Scythe: Invaders from Afar (2016)"}]
+      [%{id: 169786, name: "Scythe (2016)", image: "https://cf.geekdo-images.com/images/pic3163924_mt.jpg"},
+        %{id: 199727, name: "Scythe: Invaders from Afar (2016)", image: "https://cf.geekdo-images.com/images/pic3037396_mt.jpg"}]
 
       iex> BoardGameGeekClient.search_games("Sushi Go Party")
-      [%{id: 192291, name: "Sushi Go Party! (2016)"}]
+      [%{id: 192291, name: "Sushi Go Party! (2016)", image: "https://cf.geekdo-images.com/images/pic3031286_mt.jpg"}]
   """
   def search_games(query) do
-    encoded_query = URI.encode_query(%{query: query})
-    doc = "search?#{encoded_query}&type=boardgame"
-    |> get_response
+    encoded_query = URI.encode_query(%{q: query})
 
-    Exml.get(doc, "//items/@total")
+    "geeksearch.php?action=search&objecttype=boardgame&#{encoded_query}"
+    |> get_html_response
+    |> Floki.find("table#collectionitems tr#row_")
+    |> scrape_game_data
+  end
+
+  defp scrape_game_data(games) when is_list(games) do
+    Enum.map(games, fn game -> game_from_html(game)  end)
+  end
+  defp scrape_game_data(game) do
+    [game_from_html(game)]
+  end
+
+  defp game_from_html(game) do
+    name_data = Floki.find(game, "div[id^='results_objectname']")
+    link_data = Floki.find(name_data, "a")
+
+    name = Floki.text(link_data)
+
+    year = Floki.find(name_data, "span")
+    |> Floki.text
+
+    id = Floki.attribute(link_data, "href")
+    |> List.first
+    |> String.splitter("/")
+    |> Enum.take(3)
+    |> List.last
     |> String.to_integer
-    |> search_games(doc)
-  end
-  defp search_games(0, _), do: []
-  defp search_games(_, doc) do
-    ids = Exml.get(doc, "//items/item/@id")
-    names = Exml.get(doc, "//items/item/name/@value")
-    years = Exml.get(doc, "//items/item/yearpublished/@value")
-    search_games(ids, names, years)
-  end
-  # Handle the case where there is only one result
-  defp search_games(id, name, year) when not is_list(id) do
-    search_games([id], [name], [year])
-  end
-  defp search_games(ids, names, years) when is_list(ids) do
-    games = Enum.zip(names, years)
-    Enum.zip(ids, games) |> Enum.map(fn {id, {name, year}} -> %{id: String.to_integer(id), name: "#{name} (#{year})"} end)
+
+    thumbnail = Floki.find(game, "td.collection_thumbnail a img")
+    |> Floki.attribute("src")
+    |> List.first
+
+    %{id: id, name: String.trim(name <> " " <> year), image: thumbnail}
   end
 
   @doc """
@@ -117,6 +133,10 @@ defmodule BoardGameGeekClient do
        min_players: String.to_integer(min_players),
        max_players: String.to_integer(max_players)
     }
+  end
+
+  defp get_html_response(url, timeout \\ 5_000) do
+    @boardgamegeek_html.get(url, [timeout: timeout]).body
   end
 
   defp get_response(url, timeout \\ 5_000) do
