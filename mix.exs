@@ -7,7 +7,9 @@ defmodule BoardGameGeekClient.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     source_url: "https://github.com/ElixirCLE/boardgamegeek_client"
+    ]
   end
 
   # Configuration for the OTP application
@@ -34,6 +36,15 @@ defmodule BoardGameGeekClient.Mixfile do
       {:poison, "~> 2.0"},
       {:floki, "~> 0.17.0"},
       {:html_sanitize_ex, "~> 1.0"}
+    ]
+  end
+
+  defp package do
+    [
+      name: :boardgamegeek_client,
+      maintainers: ["Chris Rees"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/ElixirCLE/boardgamegeek_client"}
     ]
   end
 end
