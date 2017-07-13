@@ -2,14 +2,16 @@ defmodule BoardGameGeekClient.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :boardgamegeek_client,
-     version: "0.1.0",
-     elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     package: package(),
-     deps: deps(),
-     source_url: "https://github.com/ElixirCLE/boardgamegeek_client"
+    [
+      app: :boardgamegeek_client,
+      description: description,
+      version: "0.1.0",
+      elixir: "~> 1.3",
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      package: package(),
+      deps: deps(),
+      source_url: "https://github.com/ElixirCLE/boardgamegeek_client"
     ]
   end
 
@@ -38,6 +40,12 @@ defmodule BoardGameGeekClient.Mixfile do
       {:floki, "~> 0.17.0"},
       {:html_sanitize_ex, "~> 1.0"}
     ]
+  end
+
+  defp description do
+    """
+    An Elixir wrapper around the BoardGameGeek XML API. Also scrapes some of the BoardGameGeek HTML.
+    """
   end
 
   defp package do
