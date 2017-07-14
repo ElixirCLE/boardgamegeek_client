@@ -22,7 +22,7 @@ defmodule BoardGameGeek.HTTPClient do
   end
 
   def process_request_headers(headers) do
-    Dict.put(headers, :"Content-Type", "application/xml")
+    Map.put(headers, :"Content-Type", "application/xml")
   end
 
   def process_response_body(body) do
